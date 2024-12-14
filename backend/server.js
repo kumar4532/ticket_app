@@ -6,6 +6,7 @@ import connectDB from './db/connectDB.js';
 
 import authRoutes from './routers/auth.routes.js';
 import packageRoutes from './routers/package.routes.js'
+import bookingRoutes from './routers/booking.routes.js'
 
 dotenv.config({
     path: './.env'
@@ -22,6 +23,7 @@ app.use(cookieParser());
 
 app.use("/api/auth", authRoutes);
 app.use("/api", packageRoutes);
+app.use("/api", bookingRoutes);
 
 app.use(express.static(path.join(__dirname, "/frontend/dist")))
 app.get("*",(req, res) => {
