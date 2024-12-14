@@ -21,7 +21,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.use("/api/auth", authRoutes);
-app.use("/api/admin", packageRoutes);
+app.use("/api", packageRoutes);
 
 app.use(express.static(path.join(__dirname, "/frontend/dist")))
 app.get("*",(req, res) => {
