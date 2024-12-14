@@ -5,6 +5,7 @@ import cookieParser from 'cookie-parser';
 import connectDB from './db/connectDB.js';
 
 import authRoutes from './routers/auth.routes.js';
+import packageRoutes from './routers/package.routes.js'
 
 dotenv.config({
     path: './.env'
@@ -20,6 +21,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.use("/api/auth", authRoutes);
+app.use("/api/admin", packageRoutes);
 
 app.use(express.static(path.join(__dirname, "/frontend/dist")))
 app.get("*",(req, res) => {
