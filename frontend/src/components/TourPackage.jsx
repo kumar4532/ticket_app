@@ -1,8 +1,19 @@
 import React, { useEffect, useState } from 'react'
 import formatDate from '../utils/formatDate';
+import useBooking from '../hooks/useBooking';
 
 const TourPackage = () => {
+    const initialFormState = {
+        id: '',
+        name: '',
+        email: '',
+        number: '',
+        travelers: 1
+    };
+
+    const {loading, book} = useBooking();
     const [packages, setPackages] = useState();
+    const [formInfo, setFormInfo] = useState(initialFormState)
 
     useEffect(() => {
         const getPackage = async() => {
@@ -19,12 +30,27 @@ const TourPackage = () => {
         getPackage();
     }, [])
 
-    const handleSubmit = () => {
-        console.log("This is shit"); 
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setFormInfo(prevState => ({
+            ...prevState,
+            [name]: name === 'travelers' || name === 'number' 
+                ? (value === '' ? '' : Number(value)) 
+                : value
+        }));
     }
 
-    console.log(packages);
-    
+    const handleSubmit = async(e) => {
+        e.preventDefault();
+        await book(formInfo);
+        setFormInfo(initialFormState);
+    }
+
+    const handleModalClose = (e) => {
+        if (e.target === e.currentTarget) {
+            e.currentTarget.close();
+        }
+    }
 
   return (
     <div className='grid grid-cols-2 p-6 md:grid-cols-3 md:p-8 gap-4'>
@@ -42,19 +68,64 @@ const TourPackage = () => {
                         <p>{pack.description}</p>
                         <p>{formatDate(pack.dates.startDate)} - {formatDate(pack.dates.endDate)}</p>
                         <div className="card-actions justify-end">
-                        <button className="btn btn-primary" onClick={()=>document.getElementById('my_modal_1').showModal()}>Book Now</button>
+                            <button 
+                                className="btn btn-primary" 
+                                onClick={() => {
+                                    setFormInfo(prev => ({...initialFormState, id: pack._id}));
+                                    document.getElementById(`modal_${pack._id}`).showModal();
+                                }}
+                            >Book Now</button>
                         </div>
                     </div>
-                    <dialog id="my_modal_1" className="modal">
+                    <dialog id={`modal_${pack._id}`} className="modal" onClick={handleModalClose}>
                         <div className="modal-box">
                             <h3 className="font-bold text-lg">Book {pack.title}</h3>
                             <div className="modal-action">
-                            <form method="dialog" className='flex flex-col space-y-4 mx-auto w-full'>
-                                <input className='p-3 border-none rounded-lg' type="text" placeholder='Enter Name' />
-                                <input className='p-3 border-none rounded-lg' type="text" placeholder='Enter Email' />
-                                <input className='p-3 border-none rounded-lg' type="text" placeholder='Enter Ph. Number' />
-                                <input className='p-3 border-none rounded-lg' type="text" placeholder='Enter Number of Travelers' />
-                                <button className="btn" onClick={handleSubmit}>Submit</button>
+                            <form 
+                                method="dialog" 
+                                className='flex flex-col space-y-4 mx-auto w-full'
+                                onSubmit={handleSubmit}
+                            >
+                                <input type="text" hidden />
+                                <input 
+                                    className='p-3 border-none rounded-lg' 
+                                    type="text" 
+                                    name="name"
+                                    placeholder='Enter Name' 
+                                    value={formInfo?.name}
+                                    onChange={handleInputChange}
+                                    required
+                                />
+                                <input 
+                                    className='p-3 border-none rounded-lg' 
+                                    type="email" 
+                                    name="email"
+                                    placeholder='Enter Email' 
+                                    value={formInfo?.email}
+                                    onChange={handleInputChange}
+                                    required
+                                />
+                                <input 
+                                    className='p-3 border-none rounded-lg' 
+                                    type="tel" 
+                                    name="number"
+                                    placeholder='Enter Ph. Number' 
+                                    value={formInfo?.number}
+                                    onChange={handleInputChange}
+                                    maxLength={10}
+                                    required
+                                />
+                                <input 
+                                    className='p-3 border-none rounded-lg' 
+                                    type="number" 
+                                    name="travelers"
+                                    placeholder='Enter Number of Travelers' 
+                                    value={formInfo?.travelers}
+                                    onChange={handleInputChange}
+                                    min="1"
+                                    required
+                                />
+                                <button type="submit" className="btn">{loading ? <span className='loading loading-spinner'></span> : "Submit"}</button>
                             </form>
                             </div>
                         </div>
