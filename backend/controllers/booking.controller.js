@@ -19,3 +19,12 @@ export const createBooking = async(req, res) => {
         return res.status(500).json("Internal server error")
     }
 }
+
+export const getBooking = async(req, res) => {
+    try {
+        const { id } = req.params
+    } catch (error) {
+        console.error("Error while creating booking", error);
+        return res.status(500).json("Internal server error")
+    }
+}

@@ -22,6 +22,7 @@ function useBooking() {
                 toast.error("Please enter valid credientilas");
             } else {
                 toast.success("Package has been booked.")
+                return data;
             }
 
         } catch (error) {
