@@ -1,8 +1,11 @@
 import React from 'react'
+import TourPackage from '../../components/TourPackage'
 
 const Home = () => {
   return (
-    <div>Home</div>
+    <div>
+      <TourPackage />
+    </div>
   )
 }
 
