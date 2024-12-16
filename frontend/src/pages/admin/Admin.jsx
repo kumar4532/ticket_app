@@ -3,6 +3,8 @@ import formatDate from '../../utils/formatDate';
 import handleModalClose from '../../utils/modalClose';
 import usePackageAction from '../../hooks/usePackageAction';
 import useDeletePackage from '../../hooks/useDeletePackage';
+import toast from 'react-hot-toast';
+import Bookings from '../../components/Bookings';
 
 const Admin = () => {
   const datePair = {
@@ -32,6 +34,7 @@ const Admin = () => {
         setPackages(Array.isArray(data) ? data : []);
       } catch (error) {
         console.error("Error while fetching the packages", error);
+        toast.error(error.message)
       }
     };
 
@@ -124,7 +127,6 @@ const Admin = () => {
                     </button>
                   </div>
                 </div>
-
               </div>
             ))
           ) : (
@@ -189,6 +191,7 @@ const Admin = () => {
           </div>
         </dialog>
       </div>
+      <Bookings />
     </div>
   )
 }

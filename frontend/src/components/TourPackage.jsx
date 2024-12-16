@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import formatDate from '../utils/formatDate';
 import useBooking from '../hooks/useBooking';
 import handleModalClose from '../utils/modalClose';
+import toast from 'react-hot-toast';
 
 const TourPackage = () => {
     const initialFormState = {
@@ -26,6 +27,7 @@ const TourPackage = () => {
                 setPackages(Array.isArray(data) ? data : []);
             } catch (error) {
                 console.error("Error while fetching the packages", error);
+                toast.error(error.message)
             }
         };
 
@@ -69,7 +71,7 @@ const TourPackage = () => {
                                 <p>{formatDate(pack.dates.startDate)} - {formatDate(pack.dates.endDate)}</p>
                                 <div className="card-actions justify-end">
                                     <button
-                                        className="btn btn-primary"
+                                        className="btn btn-primary mt-2"
                                         onClick={() => {
                                             setFormInfo(prev => ({ ...initialFormState, id: pack._id }));
                                             document.getElementById(`modal_${pack._id}`).showModal();
