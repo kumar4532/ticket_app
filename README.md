@@ -59,11 +59,22 @@ JWT_SECRET=<Your JWT secret key>
 
 ## Running the Application
 
-Start the server in development mode:
+Start the backend:
 ```
 npm run dev
 ```
 This will run the server using nodemon, which automatically restarts the server upon file changes.
+
+Start the frontend:
+```
+cd frontend
+npm run dev
+```
+
+Build the app:
+```
+npm run build
+```
 
 Production Mode
 ```
