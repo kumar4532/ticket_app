@@ -80,3 +80,5 @@ Production Mode
 ```
 npm start
 ```
+
+[Deployed App](https://ticket-app-j0yk.onrender.com)
