@@ -72,22 +72,8 @@ const logout = (req, res) => {
     }
 }
 
-const getAllUsers = async(req, res) => {
-    try {
-        const currentUserId = req.user._id;
-
-        const users = await User.find({ _id: { $ne: currentUserId } }).select("-username -friends -password");
-
-        return res.status(200).json(users);
-    } catch (error) {
-        console.log("Error in logout controller", error);
-        return res.status(500).json("Internal server error")
-    }
-}
-
 export {
     signup,
     login,
-    logout,
-    getAllUsers
+    logout
 }

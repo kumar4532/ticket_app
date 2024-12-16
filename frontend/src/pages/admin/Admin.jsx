@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import Logout from '../../components/Logout';
 import formatDate from '../../utils/formatDate';
 import handleModalClose from '../../utils/modalClose';
 import usePackageAction from '../../hooks/usePackageAction';
@@ -75,11 +76,12 @@ const Admin = () => {
   return (
     <div className='flex flex-col'>
 
-      <div className='ml-auto'>
+      <div className='flex flex-row space-x-2 ml-auto'>
         <button
           className="btn btn-outline btn-accent"
           onClick={() => { document.getElementById(`modal_1`).showModal() }}
         >Add Package</button>
+        <button className='btn btn-outline text-2xl'><Logout /></button>
       </div>
 
       <div className='grid grid-cols-2 p-6 md:grid-cols-3 md:p-8 gap-4'>
