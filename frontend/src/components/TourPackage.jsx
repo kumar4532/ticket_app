@@ -45,9 +45,9 @@ const TourPackage = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const invoice = await book(formInfo);
-        console.log(invoice);
-        
-        navigate("/invoice")
+        if (invoice) {
+            navigate("/invoice", { state: { invoice: invoice } })
+        }
         setFormInfo(initialFormState);
     }
 

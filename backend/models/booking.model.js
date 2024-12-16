@@ -7,8 +7,7 @@ const bookingSchema = new mongoose.Schema({
     },
     email: {
         type: String,
-        required: true,
-        unique: true
+        required: true
     },
     number: {
         type: String,
@@ -20,7 +19,7 @@ const bookingSchema = new mongoose.Schema({
     },
     bookedPackage: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Package'
+        ref: 'package'
     }
 }, {timestamps: true})
 

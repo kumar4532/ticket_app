@@ -1,4 +1,5 @@
 import Booking from "../models/booking.model.js";
+import Package from '../models/package.model.js'
 
 export const createBooking = async(req, res) => {
     try {
@@ -13,16 +14,9 @@ export const createBooking = async(req, res) => {
             bookedPackage: id
         })
 
-        return res.status(200).json(newBooking)
-    } catch (error) {
-        console.error("Error while creating booking", error);
-        return res.status(500).json("Internal server error")
-    }
-}
+        const populatedBooking = await Booking.findById(newBooking._id).populate("bookedPackage");
 
-export const getBooking = async(req, res) => {
-    try {
-        const { id } = req.params
+        return res.status(200).json(populatedBooking)
     } catch (error) {
         console.error("Error while creating booking", error);
         return res.status(500).json("Internal server error")

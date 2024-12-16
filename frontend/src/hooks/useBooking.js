@@ -16,7 +16,6 @@ function useBooking() {
             });
 
             const data = await res.json();
-            console.log(data);
             
             if (data.error) {
                 toast.error("Please enter valid credientilas");
