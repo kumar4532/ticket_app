@@ -6,7 +6,7 @@ function usePackageAction() {
 
     const packageAction = async ({ title, description, price, dates, image }, id) => {
 
-        const url = id ? `/api/admin/packages` : `/api/admin/packages/${id}`;
+        const url = id ? `/api/admin/packages/${id}` : `/api/admin/packages`;
         const action = id ? 'PUT' : 'POST';
 
         setLoading(true);

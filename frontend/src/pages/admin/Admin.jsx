@@ -61,12 +61,11 @@ const Admin = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     await packageAction(formInfo, id)
+    setFormInfo(initialFormState)
     setId();
   }
 
   const handleDelete = async (delId) => {
-    console.log(delId);
-
     await deleteId(delId)
   }
 
@@ -102,6 +101,16 @@ const Admin = () => {
                       className="btn btn-outline btn-info"
                       onClick={() => {
                         setId(pack._id);
+                        setFormInfo({
+                          title: pack.title,
+                          description: pack.description,
+                          price: pack.price,
+                          dates: {
+                            startDate: pack.dates.startDate,
+                            endDate: pack.dates.endDate,
+                          },
+                          image: pack.image,
+                        }); // Populate the form with the package data
                         document.getElementById(`modal_1`).showModal();
                       }}
                     >
@@ -111,7 +120,7 @@ const Admin = () => {
                       className="btn btn-outline btn-error"
                       onClick={() => handleDelete(pack._id)}
                     >
-                      Delete
+                      {delLoading ? <span className='loading loading-spinner'></span> : "Delete"}
                     </button>
                   </div>
                 </div>
@@ -174,7 +183,7 @@ const Admin = () => {
                   value={formInfo?.image}
                   onChange={handleInputChange}
                 />
-                <button type="submit" className="btn">{delLoading ? <span className='loading loading-spinner'></span> : "Submit"}</button>
+                <button type="submit" className="btn">{loading ? <span className='loading loading-spinner'></span> : "Submit"}</button>
               </form>
             </div>
           </div>
